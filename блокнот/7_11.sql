@@ -123,9 +123,6 @@ INSERT INTO donkey(id, breed, command, gender, birthday) VALUES
     (7, 'Мамонт', 'Вперед', 'm', '2018-08-17');
    
    
-## Удаление таблицы верблюдов
-DELETE FROM pack_animals  WHERE animals  = 'camel';
-DELETE FROM camel;
 
 ## Объединение таблицы лошадей и ослов в одну таблицу.
 SELECT pack_animals.id, pack_animals.name, pack_animals.animals, 
