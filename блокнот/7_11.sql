@@ -134,3 +134,10 @@ FROM pack_animals
 LEFT JOIN horse ON pack_animals.id = horse.id
 LEFT JOIN donkey ON pack_animals.id = donkey.id
 WHERE animals = 'horse' OR animals = 'donkey';
+
+## Удаление таблицы верблюдов
+SELECT * FROM camel;  
+DELETE FROM camel;   
+SELECT * FROM pack_animals;
+SELECT * FROM pack_animals  WHERE animals  = 'camel';   
+DELETE FROM pack_animals  WHERE animals  = 'camel';
