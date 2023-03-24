@@ -126,3 +126,14 @@ INSERT INTO donkey(id, breed, command, gender, birthday) VALUES
 ## Удаление таблицы верблюдов
 DELETE FROM pack_animals  WHERE animals  = 'camel';
 DELETE FROM camel;
+
+## Объединение таблицы лошадей и ослов в одну таблицу.
+SELECT pack_animals.id, pack_animals.name, pack_animals.animals, 
+		horse.breed, donkey.breed,
+		horse.command, donkey.command,
+		horse.gender, donkey.gender,
+		horse.birthday, donkey.birthday 		 
+FROM pack_animals
+LEFT JOIN horse ON pack_animals.id = horse.id
+LEFT JOIN donkey ON pack_animals.id = donkey.id
+WHERE animals = 'horse' OR animals = 'donkey';
