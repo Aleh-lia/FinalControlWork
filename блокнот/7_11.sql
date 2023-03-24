@@ -125,6 +125,25 @@ INSERT INTO donkey(id, breed, command, gender, birthday) VALUES
    
 
 ## Объединение таблицы лошадей и ослов в одну таблицу.
+DROP TABLE IF EXISTS pack_animal_new;
+create table pack_animal_new (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY)
+select  id, 
+        command, 
+        birthday 
+from horse union 
+select  id, 
+        command, 
+        birthday
+from donkey;
+
+SELECT * FROM pack_animal_new;
+
+SELECT pack_animals.id, pack_animals.name, pack_animals.animals,		
+		pack_animal_new.command,		
+		pack_animal_new.birthday		 
+FROM pack_animals
+LEFT JOIN pack_animal_new ON pack_animals.id = pack_animal_new.id;
+
 SELECT pack_animals.id, pack_animals.name, pack_animals.animals, 
 		horse.breed, donkey.breed,
 		horse.command, donkey.command,
