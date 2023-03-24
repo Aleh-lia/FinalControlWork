@@ -241,3 +241,41 @@ SELECT animals.id_id, name, animals,
 		command, birthday, months
 FROM animals
 JOIN young_animals ON young_animals.id_id = animals.id_id;
+
+## Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.
+
+DROP TABLE IF EXISTS new_animals;
+CREATE TABLE new_animals (id_an INT NOT NULL AUTO_INCREMENT PRIMARY KEY)
+SELECT  id, 
+        command,
+        birthday,
+        'cat' AS old_table
+FROM cat UNION 
+SELECT  id, 
+        command,
+        birthday,
+        'dog' AS old_table
+FROM dog UNION
+SELECT  id, 
+        command,
+        birthday,
+        'hamster' AS old_table
+FROM hamster UNION 
+SELECT  id, 
+        command,
+        birthday,
+        'horse' AS old_table
+FROM horse UNION
+SELECT  id, 
+        command,
+        birthday,
+        'donkey' AS old_table
+FROM donkey;
+
+SELECT * FROM new_animals;
+
+SELECT animals.id_id, name, animals,		
+		command, birthday, old_table
+FROM animals
+LEFT JOIN new_animals ON new_animals.id = animals.id
+WHERE animals = old_table;
