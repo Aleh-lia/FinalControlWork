@@ -160,3 +160,84 @@ DELETE FROM camel;
 SELECT * FROM pack_animals;
 SELECT * FROM pack_animals  WHERE animals  = 'camel';   
 DELETE FROM pack_animals  WHERE animals  = 'camel';
+
+## Создание таблицы, в которой все животные в возрасте от 1 до 3 лет.
+DROP TABLE IF EXISTS new_pets;
+CREATE TABLE new_pets (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY)
+SELECT  id, 
+        command, 
+        birthday 
+FROM dog UNION  
+SELECT  id, 
+        command, 
+        birthday
+FROM cat UNION 
+SELECT  id, 
+        command, 
+        birthday
+FROM hamster;
+
+SELECT * FROM new_pets; 
+
+
+SELECT pets.id, name, animals,		
+		new_pets.command,		
+		new_pets.birthday
+FROM pets
+LEFT JOIN new_pets ON new_pets.id = pets.id;
+
+CREATE TABLE animals(id_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY)
+SELECT  id, 
+        name, 
+        animals
+FROM pets UNION 
+SELECT  id, 
+        name, 
+        animals
+FROM pack_animals;
+SELECT * FROM animals a ;
+
+
+DROP TABLE IF EXISTS human_friend;
+CREATE TABLE human_friend(
+	id_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	id INT,
+	command VARCHAR(45),
+    birthday DATE,
+	FOREIGN KEY (id_id) REFERENCES animals(id_id)
+);
+
+INSERT into human_friend (id, command, birthday)
+SELECT  id, 
+        command, 
+        birthday
+FROM new_pets UNION 
+SELECT  id, 
+        command, 
+        birthday
+FROM pack_animal_new;
+
+SELECT * FROM human_friend;
+SELECT animals.id_id, name, animals,		
+		command, birthday
+FROM animals
+LEFT JOIN human_friend ON human_friend.id_id = animals.id_id;
+
+
+DROP TABLE IF EXISTS young_animals;
+
+CREATE TABLE young_animals(id_age INT NOT NULL AUTO_INCREMENT PRIMARY KEY)
+SELECT  id_id, 
+        command, 
+        birthday,
+       ((DATEDIFF(current_date(), birthday))/30) AS months       
+FROM human_friend
+WHERE  (DATEDIFF(current_date(), birthday))/365 > 1 
+AND (DATEDIFF(current_date(), birthday))/365 < 3;
+
+SELECT * FROM young_animals;
+
+SELECT animals.id_id, name, animals,		
+		command, birthday, months
+FROM animals
+JOIN young_animals ON young_animals.id_id = animals.id_id;
